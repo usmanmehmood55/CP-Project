@@ -115,10 +115,8 @@ void display()
 
 }
 
-
-int main()
+void menu()
 {
-	cout<<"Welcome to student management system."<<endl;
 	cout<<"Please enter:\n1 to add a record,\n2 to display/search a record,";
 	cout<<"\n3 to edit a record and \n4 to delete a record"<<endl;
 	int menu; cin>>menu;
@@ -131,5 +129,16 @@ int main()
 		display();
 		break;
 	}
+}
+
+
+int main()
+{
+	cout<<"Welcome to student management system."<<endl;
+	while (1)
+	{
+		menu();
+	}
+	return 0;
 
 }
