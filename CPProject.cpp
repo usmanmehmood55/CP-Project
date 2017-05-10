@@ -1,13 +1,14 @@
 /*
- * CP-Project.cpp
+ * cp-project.cpp
  *
- *  Created on: May 10, 2017
- *      Author: asim
+ *  Created on: 10 May 2017
+ *      Author: Ehtesham Saeed
  */
 #include <iostream>
 #include <fstream>
 #include <sstream> //Only used for converting int to string.
 #include <cstdio> //For removing files.
+#include <stdio.h>
 using namespace std;
 void add(int rollnum)
 {
@@ -166,7 +167,9 @@ void roll()
 void edit()
 {
 	cout<<"Please enter the roll number of student: ";
-	int rollnum; cin>>rollnum; cout<<endl;
+	string rollnum; cin>>rollnum;
+	rollnum += ".txt";
+	remove(rollnum.c_str( )); //Removing previous file
 	cout<<"Please enter new data about the student: "<<endl;
 
 	//Name
@@ -199,7 +202,7 @@ void edit()
 	//Courses.
 	cout<<"Enter number of courses: "; int coursenum; cin>>coursenum;
 	string course[coursenum], grade[coursenum]; int marks[coursenum];
-	for (int temp1;temp1<coursenum;temp1++)
+	for (int temp1=0;temp1<coursenum;temp1++)
 	{
 		cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
 		cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
@@ -226,17 +229,17 @@ void edit()
 
 
 	//Making a file and writing to it.
-	int number=rollnum;
+	/* int number=rollnum;
 	string rolli;
 	stringstream convert;
 	convert << number;
 	rolli = convert.str();
-
-    // remove( rolli, ios::in ); Insert remove function
+	*/
 
 
     ofstream database;
-    database.open(rolli.c_str(), ios::app);
+    //database.open(rolli.c_str(), ios::app);
+    database.open(rollnum.c_str( ));
 
 	int temp2;
 	database <<name[0]<<endl<<name[1]<<endl<<dob[0]<<endl<<dob[1];
@@ -255,9 +258,8 @@ void removeit()
 {
 	cout<<"Enter roll number: ";
 	string rollnum; cin>>rollnum;
-    rollnum += ".txt";
-
-	// int remove ( rollnum.c_str(), ios::app ); Insert remove function.
+	rollnum += ".txt";
+	remove(rollnum.c_str( ));
 }
 
 
