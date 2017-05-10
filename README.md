@@ -7,8 +7,10 @@ What works:
 - Delete record.
 - Edit record.
 - View record.
+
 What doesn't work:
 Don't know. ._.
+
 TO DO:
 - Optemize code.
 - Add general conditions and exceptions.
