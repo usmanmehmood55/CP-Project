@@ -1,14 +1,14 @@
 /*
- * cp-project.cpp
+ * CPProject.cpp
  *
- *  Created on: 10 May 2017
- *      Author: Ehtesham Saeed
+ *  Created on: Apr 9, 2017
+ *      Author: Usman
  */
+
 #include <iostream>
 #include <fstream>
 #include <sstream> //Only used for converting int to string.
-#include <cstdio> //For removing files.
-#include <stdio.h>
+#include <stdio.h> //For removing files.
 using namespace std;
 void add(int rollnum)
 {
@@ -25,10 +25,17 @@ void add(int rollnum)
 	//Date of birth.
 	int dob[3];
 	cout<<"Date of birth:-"<<endl;
+	dateofbirth: //Program will be redirected here to re-enter values through goto.
 	cout<<"Date:\t"<<endl;		cin>>dob[0];
 	cout<<"Month:\t"<<endl;		cin>>dob[1];
 	cout<<"Year:\t"<<endl;		cin>>dob[2];
 	cout<<endl;
+
+	if ( dob[0]<0 || dob[0]>32 || dob[1]<0 || dob[1]>13 || dob[2]<0 )
+	{
+		cout<<"Please enter valid values."<<endl;
+		goto dateofbirth; //Will redirect to "dateofbirth" label.
+	}
 
 	//Age.
 	int age;
@@ -44,29 +51,39 @@ void add(int rollnum)
 	cout<<endl;
 
 	//Courses.
+	Course: //Program will be redirected here to re-enter values through goto.
 	cout<<"Enter number of courses: "; int coursenum; cin>>coursenum;
 	string course[coursenum], grade[coursenum]; int marks[coursenum];
-	for (int temp1;temp1<coursenum;temp1++)
+	if ( coursenum <= 10 && coursenum > 0 )
 	{
-		cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
-		cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
-		if (marks[temp1] <= 100 && marks[temp1] >= 80)
+
+		for (int temp1;temp1<coursenum;temp1++)
 		{
-			grade [temp1] = 'A';
-		} else if  (marks[temp1] <= 79 && marks[temp1] >= 60)
-		{
-			grade [temp1] = 'B';
-		} else if (marks[temp1] <= 59 && marks[temp1] >= 50)
-		{
-			grade [temp1] = 'C';
-		} else if (marks[temp1] <= 49 && marks[temp1] >= 40)
-		{
-			grade [temp1] = 'D';
-		} else if (marks[temp1] <= 39)
-		{
-			grade [temp1] = 'F';
+			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
+			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
+			if (marks[temp1] <= 100 && marks[temp1] >= 80)
+			{
+				grade [temp1] = 'A';
+			} else if  (marks[temp1] <= 79 && marks[temp1] >= 60)
+			{
+				grade [temp1] = 'B';
+			} else if (marks[temp1] <= 59 && marks[temp1] >= 50)
+			{
+				grade [temp1] = 'C';
+			} else if (marks[temp1] <= 49 && marks[temp1] >= 40)
+			{
+				grade [temp1] = 'D';
+			} else if (marks[temp1] <= 39)
+			{
+				grade [temp1] = 'F';
+			}
 		}
+	} else
+	{
+		cout<<"Number of courses must be equal to or less than 10 and greater than 0."<<endl;
+		goto Course; //Will redirect to "Course" label.
 	}
+
 
 	cout<<"Making a file for roll number "<<rollnum<<endl;
 
@@ -78,17 +95,19 @@ void add(int rollnum)
 	rolli = convert.str();
     rolli += ".txt"; // important to create .txt file.
     ofstream database;
-    database.open(rolli.c_str(), ios::app);
+    database.open(rolli.c_str());
 
 	int temp2;
 	database <<name[0]<<endl<<name[1]<<endl<<dob[0]<<endl<<dob[1];
 	database <<endl<<dob[2]<<endl<<age<<endl<<address[0]<<endl<<address[1];
-	database <<endl<<address[2]<<endl<<address[3]<<endl;
+	database <<endl<<address[2]<<endl<<address[3]<<endl<<coursenum<<endl;
 	for (temp2=0; temp2<coursenum; temp2++)
 	{
 		database <<course[temp2]<<endl<<grade[temp2]<<endl;
 	}
 	database.close();
+
+	cout<<"File created."<<endl;
 }
 
 
@@ -97,8 +116,9 @@ void display()
 	string name[2];
 	int dob[3];
 	int age;
+	int coursenum;
 	string address[4];
-	string line;
+	string course[10], grade[10];
 
 
 	//Reading from the database file.
@@ -106,9 +126,16 @@ void display()
 	string rollnum; cin>>rollnum;
     rollnum += ".txt";
 
-	ifstream database (rollnum.c_str(), ios::app);
-	if (database.is_open())
-	{ while( database>>name[0]>>name[1]>>dob[0]>>dob[1]>>dob[2]>>age>>address[0]>>address[1]>>address[2]>>address[3] )
+	ifstream database (rollnum.c_str());
+	if (database)
+	{
+		while( database>>name[0]>>name[1]>>dob[0]>>dob[1]>>dob[2]>>
+				age>>address[0]>>address[1]>>address[2]>>address[3]>>coursenum
+				>>course[0]>>grade[0]>>course[1]>>grade[1]
+				>>course[2]>>grade[2]>>course[3]>>grade[3]
+				>>course[4]>>grade[4]>>course[5]>>grade[5]
+				>>course[6]>>grade[6]>>course[7]>>grade[7]
+				>>course[8]>>grade[8]>>course[9]>>grade[9] )
 		database.close();
 	} else
 	{
@@ -125,10 +152,10 @@ void display()
 	//Address
 	cout<<"Address:-"<<endl;
 	cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
-/*	for (int temp2=0;temp2<coursenum;temp2++)
+	for (int temp2=0;temp2<coursenum;temp2++)
 	{
 		cout<<"Your grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
-	} */
+	}
 
 
 }
@@ -172,6 +199,7 @@ void edit()
 	remove(rollnum.c_str( )); //Removing previous file
 	cout<<"Please enter new data about the student: "<<endl;
 
+
 	//Name
 	string name[2];
 	cout<<"First name:\t"<<endl;	cin>>name[0];
@@ -181,10 +209,17 @@ void edit()
 	//Date of birth.
 	int dob[3];
 	cout<<"Date of birth:-"<<endl;
+	dateofbirth: //Program will be redirected here to re-enter values through goto.
 	cout<<"Date:\t"<<endl;		cin>>dob[0];
 	cout<<"Month:\t"<<endl;		cin>>dob[1];
 	cout<<"Year:\t"<<endl;		cin>>dob[2];
 	cout<<endl;
+
+	if ( dob[0]<0 || dob[0]>32 || dob[1]<0 || dob[1]>13 || dob[2]<0 )
+	{
+		cout<<"Please enter valid values."<<endl;
+		goto dateofbirth; //Will redirect to "dateofbirth" label.
+	}
 
 	//Age.
 	int age;
@@ -200,45 +235,42 @@ void edit()
 	cout<<endl;
 
 	//Courses.
+	Course: //Program will be redirected here to re-enter values through goto.
 	cout<<"Enter number of courses: "; int coursenum; cin>>coursenum;
 	string course[coursenum], grade[coursenum]; int marks[coursenum];
-	for (int temp1=0;temp1<coursenum;temp1++)
+	if ( coursenum <= 10 && coursenum > 0 )
 	{
-		cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
-		cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
-		if (marks[temp1] <= 100 && marks[temp1] >= 80)
+
+		for (int temp1;temp1<coursenum;temp1++)
 		{
-			grade [temp1] = 'A';
-		} else if  (marks[temp1] <= 79 && marks[temp1] >= 60)
-		{
-			grade [temp1] = 'B';
-		} else if (marks[temp1] <= 59 && marks[temp1] >= 50)
-		{
-			grade [temp1] = 'C';
-		} else if (marks[temp1] <= 49 && marks[temp1] >= 40)
-		{
-			grade [temp1] = 'D';
-		} else if (marks[temp1] <= 39)
-		{
-			grade [temp1] = 'F';
+			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
+			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
+			if (marks[temp1] <= 100 && marks[temp1] >= 80)
+			{
+				grade [temp1] = 'A';
+			} else if  (marks[temp1] <= 79 && marks[temp1] >= 60)
+			{
+				grade [temp1] = 'B';
+			} else if (marks[temp1] <= 59 && marks[temp1] >= 50)
+			{
+				grade [temp1] = 'C';
+			} else if (marks[temp1] <= 49 && marks[temp1] >= 40)
+			{
+				grade [temp1] = 'D';
+			} else if (marks[temp1] <= 39)
+			{
+				grade [temp1] = 'F';
+			}
 		}
+	} else
+	{
+		cout<<"Number of courses must be equal to or less than 10 and greater than 0."<<endl;
+		goto Course; //Will redirect to "Course" label.
 	}
 
-	cout<<"Editing the file of roll number "<<rollnum<<endl;
 
-
-
-	//Making a file and writing to it.
-	/* int number=rollnum;
-	string rolli;
-	stringstream convert;
-	convert << number;
-	rolli = convert.str();
-	*/
-
-
+	cout<<"Editing the file of the student."<<endl;
     ofstream database;
-    //database.open(rolli.c_str(), ios::app);
     database.open(rollnum.c_str( ));
 
 	int temp2;
@@ -250,6 +282,8 @@ void edit()
 		database <<course[temp2]<<endl<<grade[temp2]<<endl;
 	}
 	database.close();
+	cout<<"File edited."<<endl;
+
 }
 
 
@@ -260,6 +294,7 @@ void removeit()
 	string rollnum; cin>>rollnum;
 	rollnum += ".txt";
 	remove(rollnum.c_str( ));
+	cout<<"Student's record has been deleted."<<endl;
 }
 
 
@@ -309,6 +344,3 @@ int main()
 	cout<<"Exiting";
 	return 0;
 }
-
-
-
