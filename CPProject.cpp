@@ -10,6 +10,96 @@
 #include <sstream> //Only used for converting int to string.
 #include <stdio.h> //For removing files.
 using namespace std;
+void menu(); //The main menu.
+void roll(); //Manages roll numbers.
+void add(int rollnum); //Takes input about student and adds data to a file.
+void display(); //Displays the data about a student.
+void edit(); //Edits the data about a student.
+void removeit(); //Deletes the file which contains the record of the student.
+/* P.s :-
+ * Goto statement has been used a four times. I used it only because it was easier to understand where
+ * the flow of program is going, instead of using do while, which would make it rather complicated.
+ */
+int main()
+{
+	cout<<"Welcome to student management system."<<endl;
+	MENU:	//This is the menu label, the goto statement redirects here.
+	menu();
+	cout<<"Press 1 to go to menu, press 2 to exit."<<endl;
+	int temp; cin>>temp;
+	switch (temp)
+	{
+	case 1:
+		goto MENU;	//This will redirect to "MENU" label.
+		break;
+	case 2:
+		break;
+
+	}
+	cout<<"Exiting";
+	return 0;
+}
+
+
+//This is the main menu.
+void menu()
+{
+	//Main menu.
+	cout<<endl;
+	cout<<"Please enter:\n1 To add a record,\n2 To display/search a record,";
+	cout<<"\n3 To edit a record and \n4 To delete a record"<<endl;
+	int menu; cin>>menu;
+	switch (menu)
+	{
+	case 1:
+		cout<<endl;
+		roll();
+		break;
+	case 2:
+		display();
+		break;
+	case 3:
+		edit();
+		break;
+	case 4:
+		removeit();
+		break;
+	}
+}
+
+
+
+//This function manages roll numbers.
+void roll()
+{
+	int rollnum;
+	ifstream roll("roll.txt");
+	if (roll)
+	{
+		ifstream roll ("roll.txt");
+		while( roll>>rollnum )
+		{
+			rollnum++;
+			ofstream roll;
+			roll.open ("roll.txt");
+			roll<<rollnum;
+		}
+		roll.close();
+		add(rollnum);
+
+	} else
+	{
+		ofstream roll;
+		roll.open ("roll.txt");
+		rollnum=1;
+		roll <<rollnum;
+		roll.close();
+		add(rollnum);
+	}
+}
+
+
+//This function takes data about student as input, makes a file and stores the data in it.
 void add(int rollnum)
 {
 	cout<<"Add a new record."<<endl;
@@ -88,10 +178,9 @@ void add(int rollnum)
 	cout<<"Making a file for roll number "<<rollnum<<endl;
 
 	//Making a file and writing to it.
-	int number=rollnum;
 	string rolli;
 	stringstream convert;
-	convert << number;
+	convert << rollnum;
 	rolli = convert.str();
     rolli += ".txt"; // important to create .txt file.
     ofstream database;
@@ -111,6 +200,7 @@ void add(int rollnum)
 }
 
 
+//This function takes roll number as input and displays the information about that student.
 void display()
 {
 	string name[2];
@@ -137,60 +227,30 @@ void display()
 				>>course[6]>>grade[6]>>course[7]>>grade[7]
 				>>course[8]>>grade[8]>>course[9]>>grade[9] )
 		database.close();
-	} else
-	{
-		cout << "Unable to open file";
-	}
 
-	//Name
-	cout<<"Name:-"<<endl<<name[0]<<" "<<name[1]<<endl<<endl;
-	//Date of birth
-	cout<<"Date of birth:-"<<endl;
-	cout<<dob[0]<<" - "<<dob[1]<<" - "<<dob[2]<<endl<<endl;
-	//Age
-	cout<<"Age:- "<<endl<<age<<endl<<endl;
-	//Address
-	cout<<"Address:-"<<endl;
-	cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
-	for (int temp2=0;temp2<coursenum;temp2++)
-	{
-		cout<<"Your grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
-	}
-
-
-}
-
-//This part manages roll numbers.
-void roll()
-{
-	int rollnum;
-	ifstream roll("roll.txt");
-	if (roll)
-	{
-		ifstream roll ("roll.txt");
-		while( roll>>rollnum )
+		//Name
+		cout<<"Name:-"<<endl<<name[0]<<" "<<name[1]<<endl<<endl;
+		//Date of birth
+		cout<<"Date of birth:-"<<endl;
+		cout<<dob[0]<<" - "<<dob[1]<<" - "<<dob[2]<<endl<<endl;
+		//Age
+		cout<<"Age:- "<<endl<<age<<endl<<endl;
+		//Address
+		cout<<"Address:-"<<endl;
+		cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
+		for (int temp2=0;temp2<coursenum;temp2++)
 		{
-			rollnum++;
-			ofstream roll;
-			roll.open ("roll.txt");
-			roll<<rollnum;
+			cout<<"Your grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
 		}
-		roll.close();
-		add(rollnum);
 
 	} else
 	{
-		ofstream roll;
-		roll.open ("roll.txt");
-		rollnum=1;
-		roll <<rollnum;
-		roll.close();
-		add(rollnum);
+		cout<<"Unable to open file."<<endl;
 	}
 }
 
 
-
+//This function deletes the old file, takes in data as input again and makes a new file with the same name with new data in it.
 void edit()
 {
 	cout<<"Please enter the roll number of student: ";
@@ -287,60 +347,27 @@ void edit()
 }
 
 
-
+//This function takes roll number as input and deletes the student's file.
 void removeit()
 {
 	cout<<"Enter roll number: ";
 	string rollnum; cin>>rollnum;
 	rollnum += ".txt";
-	remove(rollnum.c_str( ));
-	cout<<"Student's record has been deleted."<<endl;
-}
-
-
-
-void menu()
-{
-	//Main menu.
-	cout<<endl;
-	cout<<"Please enter:\n1 to add a record,\n2 to display/search a record,";
-	cout<<"\n3 to edit a record and \n4 to delete a record"<<endl;
-	int menu; cin>>menu;
-	switch (menu)
+	ifstream database (rollnum.c_str());
+	string name[2];
+	if (database)
 	{
-	case 1:
-		cout<<endl;
-		roll();
-		break;
-	case 2:
-		display();
-		break;
-	case 3:
-		edit();
-		break;
-	case 4:
-		removeit();
-		break;
+		while( database>>name[0]>>name[1] )
+		database.close();
 	}
-}
-
-
-int main()
-{
-	cout<<"Welcome to student management system."<<endl;
-	MENU:	//This is the menu label, the goto statement redirects here.
-	menu();
-	cout<<"Press 1 to go to menu, press 2 to exit."<<endl;
-	int temp; cin>>temp;
-	switch (temp)
+	cout<<"Do you wish to delete the record of "<<name[0]<<" "<<name[1]<<"? (Y/N)"<<endl;
+	char temp; cin>>temp;
+	if (temp=='y'||temp=='Y')
 	{
-	case 1:
-		goto MENU;	//This will redirect to "MENU" label.
-		break;
-	case 2:
-		break;
-
+		remove(rollnum.c_str( ));
+		cout<<"Student's record has been deleted."<<endl;
+	} else
+	{
+		cout<<"The record has not been deleted."<<endl;
 	}
-	cout<<"Exiting";
-	return 0;
 }
