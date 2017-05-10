@@ -8,7 +8,7 @@ What works:
 5- Edit record.
 6- View record.
 What doesn't work:
-Reading courses and grades from files.
+Don't know. ._.
 TO DO:
 1- Optemize code.
 2- Add general conditions and exceptions.
