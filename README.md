@@ -1,5 +1,6 @@
 # CP-Project
-CP Semester Project for 2nd semester. Student management system.
+CP Semester Project for 2nd semester: 'Student management system'.
+
 What works:
 - Add record.
 - Roll number system.
@@ -9,8 +10,8 @@ What works:
 - View record.
 
 What doesn't work:
-Don't know. ._.
+- Don't know. ._.
 
 TO DO:
-- Optemize code.
-- Add general conditions and exceptions.
+- Optemize code. (Has been almost optemized)
+- Add general conditions and exceptions. (Almost done)
