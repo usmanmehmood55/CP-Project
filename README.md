@@ -4,12 +4,11 @@ What works:
 1- Add record.
 2- Roll number system.
 3- File making for roll numbers.
+4- Delete record.
+5- Edit record.
+6- View record.
 What doesn't work:
-1- Delete record.
-2- Edit record.
-3- View record (Code was working but noe it can't read because of variable filename.
+Reading courses and grades from files.
 TO DO:
-1- Fix record viewing.
-2- Add delete and edit functions.
-3- Optemize code.
-4- Add general conditions and exceptions.
+1- Optemize code.
+2- Add general conditions and exceptions.
