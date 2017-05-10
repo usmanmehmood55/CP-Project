@@ -66,7 +66,8 @@ void add(int rollnum)
 			grade [temp1] = 'F';
 		}
 	}
-	cout<<"Roll is "<<rollnum<<endl;
+
+	cout<<"Making a file for roll number "<<rollnum<<endl;
 
 	//Making a file and writing to it.
 	int number=rollnum;
@@ -74,9 +75,9 @@ void add(int rollnum)
 	stringstream convert;
 	convert << number;
 	rolli = convert.str();
-    	rolli += ".txt"; // important to create .txt file.
-    	ofstream database;
-    	database.open(rolli.c_str(), ios::app);
+    rolli += ".txt"; // important to create .txt file.
+    ofstream database;
+    database.open(rolli.c_str(), ios::app);
 
 	int temp2;
 	database <<name[0]<<endl<<name[1]<<endl<<dob[0]<<endl<<dob[1];
@@ -139,24 +140,22 @@ void roll()
 		ifstream roll ("roll.txt");
 		while( roll>>rollnum )
 		{
-			cout<<"Current roll "<<rollnum<<endl;
 			rollnum++;
 			ofstream roll;
 			roll.open ("roll.txt");
 			roll<<rollnum;
-			add(rollnum);
 		}
 		roll.close();
+		add(rollnum);
 
 	} else
 	{
 		ofstream roll;
 		roll.open ("roll.txt");
-		rollnum=0;
+		rollnum=1;
 		roll <<rollnum;
-		rollnum++;
-		add(rollnum);
 		roll.close();
+		add(rollnum);
 	}
 }
 
