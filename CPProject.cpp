@@ -74,9 +74,9 @@ void add(int rollnum)
 	stringstream convert;
 	convert << number;
 	rolli = convert.str();
-    rolli += ".txt"; // important to create .txt file.
-    ofstream database;
-    database.open(rolli.c_str(), ios::app);
+    	rolli += ".txt"; // important to create .txt file.
+    	ofstream database;
+    	database.open(rolli.c_str(), ios::app);
 
 	int temp2;
 	database <<name[0]<<endl<<name[1]<<endl<<dob[0]<<endl<<dob[1];
