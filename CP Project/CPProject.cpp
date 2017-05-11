@@ -5,21 +5,35 @@
  *      Author: Usman
  */
 
+/*
+ * Computer Programming Semester Project: Student Management System
+ * Features:
+ * 1- Has roll number system.
+ * 2- Saves student data in files instead of saving it in temporary variables.
+ * 3- Searches by roll number and by name.
+ */
+
 #include <iostream>
-#include <fstream>
+#include <fstream> //Used for file streaming.
 #include <sstream> //Only used for converting int to string.
 #include <stdio.h> //For removing files.
+
 using namespace std;
+
 void menu(); //The main menu.
 void roll(); //Manages roll numbers.
 void add(int rollnum); //Takes input about student and adds data to a file.
 void display(); //Displays the data about a student.
 void edit(); //Edits the data about a student.
 void removeit(); //Deletes the file which contains the record of the student.
-/* P.s :-
+
+/* P.S. :-
  * Goto statement has been used a four times. I used it only because it was easier to understand where
  * the flow of program is going, instead of using do while, which would make it rather complicated.
  */
+
+
+
 int main()
 {
 	cout<<"Welcome to student management system."<<endl;
@@ -39,6 +53,7 @@ int main()
 	cout<<"Exiting";
 	return 0;
 }
+
 
 
 //This is the main menu.
@@ -97,6 +112,7 @@ void roll()
 		add(rollnum);
 	}
 }
+
 
 
 //This function takes data about student as input, makes a file and stores the data in it.
@@ -200,54 +216,148 @@ void add(int rollnum)
 }
 
 
+
 //This function takes roll number as input and displays the information about that student.
 void display()
 {
-	string name[2];
-	int dob[3];
-	int age;
-	int coursenum;
-	string address[4];
-	string course[10], grade[10];
-
-
-	//Reading from the database file.
-	cout<<"Enter roll number."<<endl;
-	string rollnum; cin>>rollnum;
-    rollnum += ".txt";
-
-	ifstream database (rollnum.c_str());
-	if (database)
+	cout<<"Do you want to search by Name or by Roll number?"<<endl<<"Enter:"<<endl;
+	cout<<"1 To search by Name."<<endl;
+	cout<<"2 To search by Roll number."<<endl;
+	int searchtemp; cin>>searchtemp;
+	if(searchtemp==1)
 	{
-		while( database>>name[0]>>name[1]>>dob[0]>>dob[1]>>dob[2]>>
-				age>>address[0]>>address[1]>>address[2]>>address[3]>>coursenum
-				>>course[0]>>grade[0]>>course[1]>>grade[1]
-				>>course[2]>>grade[2]>>course[3]>>grade[3]
-				>>course[4]>>grade[4]>>course[5]>>grade[5]
-				>>course[6]>>grade[6]>>course[7]>>grade[7]
-				>>course[8]>>grade[8]>>course[9]>>grade[9] )
-		database.close();
+		string name[4];
+		cout<<"Enter first name."<<endl;
+		cin>>name[2];
+		cout<<"Enter last name."<<endl;
+		cin>>name[3];
+		int rollnum1;
 
-		//Name
-		cout<<"Name:-"<<endl<<name[0]<<" "<<name[1]<<endl<<endl;
-		//Date of birth
-		cout<<"Date of birth:-"<<endl;
-		cout<<dob[0]<<" - "<<dob[1]<<" - "<<dob[2]<<endl<<endl;
-		//Age
-		cout<<"Age:- "<<endl<<age<<endl<<endl;
-		//Address
-		cout<<"Address:-"<<endl;
-		cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
-		for (int temp2=0;temp2<coursenum;temp2++)
+		ifstream database ("roll.txt");
+		if (database)
 		{
-			cout<<"Your grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
-		}
+			while (database>>rollnum1)
+			{
+				for (int i=1; i<=rollnum1; i++)
+				{
+					string rolli;
+					stringstream convert;
+					convert << i;
+					rolli = convert.str();
+				    rolli += ".txt"; // important to create .txt file.
+					ifstream nameo (rolli.c_str());
+					if (nameo)
+					{
+						while (nameo>>name[0]>>name[1])
+						{
+							if(name[0]==name[2] && name[1]==name[3])
+							{
+								ifstream database (rolli.c_str());
+								if (database)
+								{
+									string name[2];
+									int dob[3];
+									int age;
+									int coursenum;
+									string address[4];
+									string course[10], grade[10];
 
+									while( database>>name[0]>>name[1]>>dob[0]>>dob[1]>>dob[2]>>
+											age>>address[0]>>address[1]>>address[2]>>address[3]>>coursenum
+											>>course[0]>>grade[0]>>course[1]>>grade[1]
+											>>course[2]>>grade[2]>>course[3]>>grade[3]
+											>>course[4]>>grade[4]>>course[5]>>grade[5]
+											>>course[6]>>grade[6]>>course[7]>>grade[7]
+											>>course[8]>>grade[8]>>course[9]>>grade[9] )
+									database.close();
+
+									//Name
+									cout<<"Name:-"<<endl<<name[0]<<" "<<name[1]<<endl<<endl;
+									//Date of birth
+									cout<<"Date of birth:-"<<endl;
+									cout<<dob[0]<<" - "<<dob[1]<<" - "<<dob[2]<<endl<<endl;
+									//Age
+									cout<<"Age:- "<<endl<<age<<endl<<endl;
+									//Address
+									cout<<"Address:-"<<endl;
+									cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<
+									", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
+									for (int temp2=0;temp2<coursenum;temp2++)
+									{
+										cout<<"Grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
+									}
+
+								} else
+								{
+									cout<<"Error: File not found / Unable to open file."<<endl;
+								}
+							}
+						}
+					} else
+					{
+						cout<<"Error: File not found / Unable to open file."<<endl;
+					}
+				}
+			}
+		}  else
+		{
+			cout<<"Error: File not found / Unable to open file."<<endl;
+		}
+	}
+	else if (searchtemp==2)
+	{
+		string name[2];
+		int dob[3];
+		int age;
+		int coursenum;
+		string address[4];
+		string course[10], grade[10];
+
+
+		//Reading from the database file.
+		cout<<"Enter roll number."<<endl;
+		string rollnum; cin>>rollnum;
+	    rollnum += ".txt";
+
+		ifstream database (rollnum.c_str());
+		if (database)
+		{
+			while( database>>name[0]>>name[1]>>dob[0]>>dob[1]>>dob[2]>>
+					age>>address[0]>>address[1]>>address[2]>>address[3]>>coursenum
+					>>course[0]>>grade[0]>>course[1]>>grade[1]
+					>>course[2]>>grade[2]>>course[3]>>grade[3]
+					>>course[4]>>grade[4]>>course[5]>>grade[5]
+					>>course[6]>>grade[6]>>course[7]>>grade[7]
+					>>course[8]>>grade[8]>>course[9]>>grade[9] )
+			database.close();
+
+			//Name
+			cout<<"Name:-"<<endl<<name[0]<<" "<<name[1]<<endl<<endl;
+			//Date of birth
+			cout<<"Date of birth:-"<<endl;
+			cout<<dob[0]<<" - "<<dob[1]<<" - "<<dob[2]<<endl<<endl;
+			//Age
+			cout<<"Age:- "<<endl<<age<<endl<<endl;
+			//Address
+			cout<<"Address:-"<<endl;
+			cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<
+			", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
+			for (int temp2=0;temp2<coursenum;temp2++)
+			{
+				cout<<"Grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
+			}
+
+		} else
+		{
+			cout<<"Error: File not found / Unable to open file."<<endl;
+		}
 	} else
 	{
-		cout<<"Unable to open file."<<endl;
+		cout<<"Error."<<endl;
 	}
+
 }
+
 
 
 //This function deletes the old file, takes in data as input again and makes a new file with the same name with new data in it.
@@ -347,6 +457,7 @@ void edit()
 }
 
 
+
 //This function takes roll number as input and deletes the student's file.
 void removeit()
 {
@@ -359,15 +470,31 @@ void removeit()
 	{
 		while( database>>name[0]>>name[1] )
 		database.close();
-	}
-	cout<<"Do you wish to delete the record of "<<name[0]<<" "<<name[1]<<"? (Y/N)"<<endl;
-	char temp; cin>>temp;
-	if (temp=='y'||temp=='Y')
-	{
-		remove(rollnum.c_str( ));
-		cout<<"Student's record has been deleted."<<endl;
+		string name[2];
+		cout<<"Do you wish to delete the record of "<<name[0]<<" "<<name[1]<<"? (Y/N)"<<endl;
+		char temp; cin>>temp;
+		if (temp=='y'||temp=='Y')
+		{
+			remove(rollnum.c_str( )); //Deletes the file.
+			cout<<"Student's record has been deleted."<<endl;
+		} else
+		{
+			cout<<"The record has not been deleted."<<endl;
+		}
 	} else
 	{
-		cout<<"The record has not been deleted."<<endl;
+		cout<<"Error: File not found / Unable to access file."<<endl;
 	}
+
 }
+
+/*
+ * Submitted by:
+ * Asim Javed		160515
+ * Ahmer Zaman		160512
+ * Aswad Mehmood	160479
+ * Usman Mehmood	160979
+ * BEMTS-2B
+ * Submitted to:
+ * Ma'am Noor Fatima
+ */
