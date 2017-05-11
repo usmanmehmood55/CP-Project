@@ -28,7 +28,7 @@ void edit(); //Edits the data about a student.
 void removeit(); //Deletes the file which contains the record of the student.
 
 /* P.S. :-
- * Goto statement has been used a four times. I used it only because it was easier to understand where
+ * Goto statement has been used a few times. I used it only because it was easier to understand where
  * the flow of program is going, instead of using do while, which would make it rather complicated.
  */
 
