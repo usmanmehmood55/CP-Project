@@ -487,14 +487,5 @@ void removeit()
 	}
 
 }
-
-/*
- * Submitted by:
- * Asim Javed		160515
- * Ahmer Zaman		160512
- * Aswad Mehmood	160479
- * Usman Mehmood	160979
- * BEMTS-2B
- * Submitted to:
- * Ma'am Noor Fatima
- */
+// Made by Usman Mehmood
+// usmanmehmood55@gmail.com
