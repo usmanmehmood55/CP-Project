@@ -163,7 +163,7 @@ void add(int rollnum)
 	if ( coursenum <= 10 && coursenum > 0 )
 	{
 
-		for (int temp1;temp1<coursenum;temp1++)
+		for (int temp1=0;temp1<coursenum;temp1++)
 		{
 			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
 			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
@@ -468,9 +468,10 @@ void removeit()
 	string name[2];
 	if (database)
 	{
+		string name[2];
 		while( database>>name[0]>>name[1] )
 		database.close();
-		string name[2];
+		
 		cout<<"Do you wish to delete the record of "<<name[0]<<" "<<name[1]<<"? (Y/N)"<<endl;
 		char temp; cin>>temp;
 		if (temp=='y'||temp=='Y')
