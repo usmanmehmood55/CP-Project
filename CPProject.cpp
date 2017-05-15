@@ -385,7 +385,7 @@ void edit()
 	cout<<"Year:\t"<<endl;		cin>>dob[2];
 	cout<<endl;
 
-	if ( dob[0]<0 || dob[0]>32 || dob[1]<0 || dob[1]>13 || dob[2]<0 )
+	if ( dob[0]<1 || dob[0]>31 || dob[1]<1 || dob[1]>12 || dob[2]<1 )
 	{
 		cout<<"Please enter valid values."<<endl;
 		goto dateofbirth; //Will redirect to "dateofbirth" label.
@@ -411,7 +411,7 @@ void edit()
 	if ( coursenum <= 10 && coursenum > 0 )
 	{
 
-		for (int temp1; temp1<coursenum; temp1++)
+		for (int temp1=0; temp1<coursenum; temp1++)
 		{
 			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
 			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
