@@ -125,7 +125,7 @@ void add(int rollnum)
 	//Name
 	string name[2];
 	cout<<"First name:\t"<<endl;	cin>>name[0];
-	cout<<"Last name:\t"<<endl;		cin>>name[1];
+	cout<<"Last name:\t"<<endl;	cin>>name[1];
 	cout<<endl;
 
 	//Date of birth.
@@ -151,8 +151,8 @@ void add(int rollnum)
 	string address[4];
 	cout<<"Address:-"<<endl;
 	cout<<"City:\t"<<endl;		cin>>address[0];
-	cout<<"Colony:\t"<<endl;		cin>>address[1];
-	cout<<"Street:\t"<<endl;		cin>>address[2];
+	cout<<"Colony:\t"<<endl;	cin>>address[1];
+	cout<<"Street:\t"<<endl;	cin>>address[2];
 	cout<<"House:\t"<<endl;		cin>>address[3];
 	cout<<endl;
 
@@ -166,7 +166,7 @@ void add(int rollnum)
 		for (int temp1=0; temp1<coursenum; temp1++)
 		{
 			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
-			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
+			cout<<"Enter marks in that course.\t"<<endl;		cin>>marks[temp1];
 			if (marks[temp1] <= 100 && marks[temp1] >= 80)
 			{
 				grade [temp1] = 'A';
