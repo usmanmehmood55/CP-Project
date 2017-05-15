@@ -28,7 +28,7 @@ void edit(); //Edits the data about a student.
 void removeit(); //Deletes the file which contains the record of the student.
 
 /* P.S. :-
- * Goto statement has been used a four times. I used it only because it was easier to understand where
+ * Goto statement has been used a few times. I used it only because it was easier to understand where
  * the flow of program is going, instead of using do while, which would make it rather complicated.
  */
 
@@ -137,7 +137,7 @@ void add(int rollnum)
 	cout<<"Year:\t"<<endl;		cin>>dob[2];
 	cout<<endl;
 
-	if ( dob[0]<0 || dob[0]>32 || dob[1]<0 || dob[1]>13 || dob[2]<0 )
+	if ( dob[0]<1 || dob[0]>31 || dob[1]<1 || dob[1]>12 || dob[2]<1 )
 	{
 		cout<<"Please enter valid values."<<endl;
 		goto dateofbirth; //Will redirect to "dateofbirth" label.
@@ -163,7 +163,7 @@ void add(int rollnum)
 	if ( coursenum <= 10 && coursenum > 0 )
 	{
 
-		for (int temp1;temp1<coursenum;temp1++)
+		for (int temp1=0; temp1<coursenum; temp1++)
 		{
 			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
 			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
@@ -342,7 +342,7 @@ void display()
 			cout<<"Address:-"<<endl;
 			cout<<"House "<<address[3]<<", "<<"Street "<<address[2]<<
 			", "<<address[1]<<" Colony"<<", "<<address[0]<<endl<<endl;
-			for (int temp2=0;temp2<coursenum;temp2++)
+			for (int temp2=0; temp2<coursenum; temp2++)
 			{
 				cout<<"Grade in "<<course[temp2]<<" is "<<grade[temp2]<<endl;
 			}
@@ -411,7 +411,7 @@ void edit()
 	if ( coursenum <= 10 && coursenum > 0 )
 	{
 
-		for (int temp1;temp1<coursenum;temp1++)
+		for (int temp1; temp1<coursenum; temp1++)
 		{
 			cout<<"Enter name of course "<<temp1+1<<":\t"<<endl;	cin>>course[temp1];
 			cout<<"Enter marks in that course.\t"<<endl;			cin>>marks[temp1];
@@ -470,7 +470,6 @@ void removeit()
 	{
 		while( database>>name[0]>>name[1] )
 		database.close();
-		string name[2];
 		cout<<"Do you wish to delete the record of "<<name[0]<<" "<<name[1]<<"? (Y/N)"<<endl;
 		char temp; cin>>temp;
 		if (temp=='y'||temp=='Y')
