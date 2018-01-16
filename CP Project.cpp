@@ -486,7 +486,3 @@ void removeit()
 	}
 
 }
-
-/*
- * Contact: 160979@students.au.edu.pk
- */
